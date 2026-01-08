@@ -9,8 +9,8 @@ class BlogModel extends Blog {
     required super.startDate,
     required super.endDate,
   });
-  //////////////////////////
-  /// 🔹 FROM JSON (Supabase → Flutter)
+  
+  
   factory BlogModel.fromJson(Map<String, dynamic> map) {
     return BlogModel(
       id: map['id'] as String,
@@ -22,7 +22,7 @@ class BlogModel extends Blog {
     );
   }
 
-  /// 🔹 TO JSON (Flutter → Supabase)
+ 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -30,7 +30,7 @@ class BlogModel extends Blog {
       'title': title,
       'content': content,
 
-      // Supabase `date` expects YYYY-MM-DD
+     
       'start_date': startDate.toIso8601String().split('T').first,
       'end_date': endDate.toIso8601String().split('T').first,
     };

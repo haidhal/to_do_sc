@@ -6,13 +6,13 @@ class AuthField extends StatelessWidget {
     super.key,
     required this.hintText,
     required this.controller,
-    //this.isObscureText = false,
+   
   });
   final TextEditingController controller;
- // final bool isObscureText;
+ 
   @override
   Widget build(BuildContext context) {
-    //using form to validate
+   
     return TextFormField(
       controller: controller,
       decoration: InputDecoration(
@@ -26,7 +26,7 @@ class AuthField extends StatelessWidget {
         }
         return null;
       },
-     // obscureText: isObscureText,
+     
     );
   }
 }

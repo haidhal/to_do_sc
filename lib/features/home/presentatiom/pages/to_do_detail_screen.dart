@@ -5,7 +5,16 @@ import 'package:to_do/core/common_widget/common_text_style.dart';
 import 'package:to_do/core/theme/app_colors.dart';
 
 class ToDoDetailScreen extends StatelessWidget {
-  const ToDoDetailScreen({super.key});
+  final String title;
+  final String content;
+  final String time;
+
+  const ToDoDetailScreen({
+    super.key,
+    required this.title,
+    required this.content,
+    required this.time,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +42,14 @@ class ToDoDetailScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CommonTextStyle(
-                          text: "Office Project",
+                          text: title,
                           fontSize: 15,
                           fontweight: FontWeight.w400,
                         ),
                         SizedBox(height: 5),
                         // add subtitle....
                         Text(
-                          "Has to do some optimization ",
+                          content,
                           overflow: TextOverflow.visible,
                           style: GoogleFonts.lexendDeca(
                             fontSize: 12,
@@ -59,7 +68,8 @@ class ToDoDetailScreen extends StatelessWidget {
                             SizedBox(width: 10),
                             // time......
                             Text(
-                              "10:00 AM",
+                              time,
+
                               style: TextStyle(
                                 color: AppColors.seconderyClr,
                                 fontSize: 15,
@@ -102,7 +112,7 @@ class ToDoDetailScreen extends StatelessWidget {
                           child: Text(
                             "Done",
                             style: GoogleFonts.lexendDeca(
-                              color: AppColors.primaryButtonClr,
+                              color: AppColors.primaryClr,
                               fontSize: 10,
                               fontWeight: FontWeight.w400,
                             ),

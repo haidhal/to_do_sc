@@ -11,39 +11,7 @@ class BlogRemoteDataSourceImpl implements BlogRemoteDataSource {
   final SupabaseClient supabaseClient;
 
   BlogRemoteDataSourceImpl(this.supabaseClient);
-// @override
-// Future<BlogModel> uploadBlog(BlogModel blog) async {
-//   try {
-//     final userId = supabaseClient.auth.currentUser!.id;
 
-//     final blogData = await supabaseClient
-//         .from('blogs')
-//         .insert({
-//           ...blog.toJson(),
-//           'poster_id': userId, // ✅ FORCE correct user
-//         })
-//         .select();
-
-//     return BlogModel.fromJson(blogData.first);
-//   } catch (e) {
-//     throw ServerException(e.toString());
-//   }
-// }
-// @override
-// Future<List<BlogModel>> getAllblogs() async {
-//   try {
-//     final userId = supabaseClient.auth.currentUser!.id;
-
-//     final blogs = await supabaseClient
-//         .from('blogs')
-//         .select('*, profiles(name)')
-//         .eq('poster_id', userId); // ✅ FILTER
-
-//     return blogs.map((blog) => BlogModel.fromJson(blog)).toList();
-//   } catch (e) {
-//     throw ServerException(e.toString());
-//   }
-// }
 
   @override
   Future<BlogModel> uploadBlog(BlogModel blog) async {
@@ -62,7 +30,9 @@ class BlogRemoteDataSourceImpl implements BlogRemoteDataSource {
   @override
   Future<List<BlogModel>> getAllblogs()async {
    try {
-    final blogs = await supabaseClient.from('blogs').select('*,profiles(name)');
+    final blogs = await supabaseClient.from('blogs').select('*,profiles(name)')
+  
+    ;
     return blogs.map((blog) =>BlogModel.fromJson(blog) ,).toList();
    } catch (e) {
      throw ServerException(e.toString());

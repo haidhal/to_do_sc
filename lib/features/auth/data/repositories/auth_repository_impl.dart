@@ -56,21 +56,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
   }
 
-  // @override
-  // Future<Either<Failure, User>> loginWithEmailAndPassword({
-  //   required String email,
-  //   required String password,
-  // }) async {
-  //   try {
-  //     final user = await remoteDataSource.loginWithEmailAndPassword(
-  //       email: email,
-  //       password: password,
-  //     );
-  //     return right(user);
-  //   } on ServerException catch (e) {
-  //     return left(Failure(e.message));
-  //   }
-  // }
+  
 
 
 }

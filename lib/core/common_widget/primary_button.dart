@@ -13,7 +13,7 @@ class PrimaryButton extends StatelessWidget {
       height: 58,
 
       decoration: BoxDecoration(
-        color: AppColors.primaryButtonClr,
+        color: AppColors.primaryClr,
         borderRadius: BorderRadius.circular(14),
       ),
       child: Stack(
@@ -38,7 +38,7 @@ class PrimaryButton extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => SignUpScreen(),
-                          //  HomeScreen()
+                          
                         ),
                       );
                     },

@@ -12,9 +12,7 @@ import 'package:to_do/features/home/presentatiom/widgets/date_picker_tile.dart';
 
 class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key});
-  // final String? selectedDate; // comes from BLoC later
-  // final VoidCallback? onPickDate;
-
+  
   @override
   State<AddTaskScreen> createState() => _AddTaskScreenState();
 }
@@ -48,20 +46,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     }
   }
 
-  // Future<void> _pickEndDate() async {
-  //   final pickedDate = await showDatePicker(
-  //     context: context,
-  //     initialDate: endDate ?? DateTime.now(),
-  //     firstDate: startDate ?? DateTime(2000),
-  //     lastDate: DateTime(2100),
-  //   );
-
-  //   if (pickedDate != null) {
-  //     setState(() {
-  //       endDate = pickedDate;
-  //     });
-  //   }
-  // }
+  
   Future<void> _pickEndDate() async {
     final DateTime firstDate = startDate ?? DateTime(2000);
 
@@ -147,7 +132,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     GestureDetector(
                       onTap: () {
                         // task adding functionality to be written
-                        //if(formKey.currentState!.validate()){
+                        
                         if (!formKey.currentState!.validate()) return;
 
                         if (startDate == null || endDate == null) {
@@ -172,8 +157,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             endDate: endDate!,
                           ),
                         );
-                        // }
-                        // Navigator.pop(context);
+                       
                       },
                       child: PrimaryButton(
                         showIcon: false,

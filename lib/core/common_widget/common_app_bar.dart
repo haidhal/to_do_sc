@@ -33,7 +33,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                     right: 2,
                     child: CircleAvatar(
                       radius: 5,
-                      backgroundColor: AppColors.primaryButtonClr,
+                      backgroundColor: AppColors.primaryClr,
                     ),
                   ),
                 ],

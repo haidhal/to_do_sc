@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:to_do/core/error/exception.dart';
 import 'package:to_do/features/auth/data/model/user_model.dart';
@@ -10,11 +12,7 @@ abstract interface class AuthRemoteDataSource {
     required String password,
   });
 
-  // Future<UserModel> loginWithEmailAndPassword({
-  //   required String email,
-  //   required String password,
-  // });
-
+  
   Future<UserModel?> getCurrentUserData();
 }
 
@@ -48,7 +46,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
      
       ;
     } catch (e) {
+      log("serverexception : ${e.toString()}");
       throw ServerException(e.toString());
+      
     }
   }
 
