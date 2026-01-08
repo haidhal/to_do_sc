@@ -10,4 +10,5 @@ abstract interface class BlogRepository {
     required DateTime startDate,
     required DateTime endDate,
   });
+  Future<Either<Failure,List<Blog>>> getAllBlogs();
 }

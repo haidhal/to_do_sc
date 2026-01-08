@@ -6,6 +6,7 @@ import 'package:to_do/core/common_widget/primary_button.dart';
 import 'package:to_do/core/utils/show_snackbar.dart';
 import 'package:to_do/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:to_do/features/auth/presentation/widgets/auth_fields.dart';
+import 'package:to_do/features/home/presentatiom/pages/home_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   SignUpScreen({super.key});
@@ -27,6 +28,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
         listener: (context, state) {
           if (state is AuthFailure) {
             showSnackbar(context, state.message);
+          }
+          if (state is AuthSuccess) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (_) => const HomeScreen()),
+              (route) => false,
+            );
           }
         },
         builder: (context, state) {
@@ -68,11 +76,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                             );
                           }
-                          // Navigator.pushAndRemoveUntil(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => HomeScreen()),
-                          //   (route) => false,
-                          // );
+                          
+                         
                         },
                         child: PrimaryButton(showIcon: false, text: "Sign Up"),
                       ),

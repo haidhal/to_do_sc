@@ -17,3 +17,4 @@ final class BlogUpload extends BlogEvent{
     required this.endDate,
   });
 }
+final class BlogFetchAllBlogs extends BlogEvent{}

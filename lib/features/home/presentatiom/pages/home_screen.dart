@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:to_do/core/common/loader.dart';
 import 'package:to_do/core/common_widget/common_text_style.dart';
 import 'package:to_do/core/theme/app_colors.dart';
+import 'package:to_do/core/utils/show_snackbar.dart';
+import 'package:to_do/features/home/presentatiom/bloc/bloc/blog_bloc.dart';
 import 'package:to_do/features/home/presentatiom/pages/add_task_screen.dart';
 import 'package:to_do/features/home/presentatiom/widgets/custom_app_bar.dart';
 import 'package:to_do/features/todo_details/presentation/pages/to_do_detail_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<BlogBloc>().add(BlogFetchAllBlogs());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,55 +69,75 @@ class HomeScreen extends StatelessWidget {
             ),
             SizedBox(height: 25),
             Expanded(
-              child: ListView.separated(
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ToDoDetailScreen(),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      height: 70,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: .8),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 12,
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                color: Color(0xffFFE4F2),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Image.asset("assets/images/briefcase.png"),
-                            ),
-                            SizedBox(width: 12),
-                            // task title ...............
-                            CommonTextStyle(
-                              text: "Office Project",
-                              fontSize: 14,
-                              fontweight: FontWeight.w400,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
+              child: BlocConsumer<BlogBloc, BlogState>(
+                listener: (context, state) {
+                  if (state is BlogFailure) {
+                    showSnackbar(context, state.error);
+                  }
                 },
-                separatorBuilder: (context, index) => SizedBox(height: 20),
-                itemCount: 4,
+                builder: (context, state) {
+                  if (state is BlogLoading) {
+                    return const Loader();
+                  }
+                  if (state is BlogDisplaySuccess) {
+                    return ListView.separated(
+                      itemBuilder: (context, index) {
+                        final blog = state.blogs[index];
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ToDoDetailScreen(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            height: 70,
+                            decoration: BoxDecoration(
+                              color: Colors.white.withValues(alpha: .8),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 12,
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: 40,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xffFFE4F2),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Image.asset(
+                                      "assets/images/briefcase.png",
+                                    ),
+                                  ),
+                                  SizedBox(width: 12),
+                                  // task title ...............
+                                  CommonTextStyle(
+                                    text: blog.title,
+                                    // text: "Office Project",
+                                    fontSize: 14,
+                                    fontweight: FontWeight.w400,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) =>
+                          SizedBox(height: 20),
+                      itemCount: state.blogs.length,
+                    );
+                  }
+                  return const SizedBox();
+                },
               ),
             ),
           ],

@@ -14,14 +14,14 @@ class BlogRepositoryImpl implements BlogRepository {
   Future<Either<Failure, Blog>> uploadBlog({
     required String title,
     required String content,
-    required String posterId,
+     String? posterId,
     required DateTime startDate,
     required DateTime endDate,
   }) async {
    try {
       BlogModel blogModel = BlogModel(
       id: const Uuid().v1(),
-      posterId: posterId,
+      posterId: posterId ?? "",
       title: title,
       content: content,
       startDate: startDate,
@@ -30,6 +30,16 @@ class BlogRepositoryImpl implements BlogRepository {
     final uploadedBlog = await blogRemoteDataSource.uploadBlog(blogModel);
     return right(uploadedBlog);
    } on ServerException catch (e) {
+     return left(Failure(e.message));
+   }
+  }
+  
+  @override
+  Future<Either<Failure, List<Blog>>> getAllBlogs() async{
+   try {
+     final blogs = await blogRemoteDataSource.getAllblogs();
+     return right(blogs);
+   }on ServerException catch (e) {
      return left(Failure(e.message));
    }
   }

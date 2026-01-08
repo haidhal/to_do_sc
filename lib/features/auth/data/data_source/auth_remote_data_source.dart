@@ -45,7 +45,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       return UserModel.fromjson(
         response.user!.toJson(),
       )
-     // .copyWith(email: currentUserSession!.user.email)
+     
       ;
     } catch (e) {
       throw ServerException(e.toString());
@@ -70,22 +70,5 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     }
   }
 
-  // @override
-  // Future<UserModel> loginWithEmailAndPassword({
-  //   required String email,
-  //   required String password,
-  // }) async {
-  //   try {
-  //     final response = await supabaseClient.auth.signInWithPassword(
-  //       email: email,
-  //       password: password,
-  //     );
-  //     if (response.user == null) {
-  //       throw ServerException("User is null");
-  //     }
-  //     return UserModel.fromjson(response.user!.toJson());
-  //   } catch (e) {
-  //     throw ServerException(e.toString());
-  //   }
-  // }
+  
 }
