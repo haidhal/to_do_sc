@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:to_do/core/common_widget/common_app_bar.dart';
 import 'package:to_do/core/common_widget/primary_button.dart';
-import 'package:to_do/core/theme/app_colors.dart';
+import 'package:to_do/features/home/presentatiom/widgets/custom_textfield.dart';
 
-class AddTaskScreen extends StatelessWidget {
+class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key, this.selectedDate, this.onPickDate});
   final String? selectedDate; // comes from BLoC later
   final VoidCallback? onPickDate;
 
+  @override
+  State<AddTaskScreen> createState() => _AddTaskScreenState();
+}
+
+class _AddTaskScreenState extends State<AddTaskScreen> {
+  final titleController = TextEditingController();
+  final contentControler = TextEditingController();
+
+  @override
+  void dispose() {
+   titleController.dispose();
+   contentControler.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,68 +31,17 @@ class AddTaskScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
           child: Column(
             children: [
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: .8),
+              CustomTextfield(text: "Project Name", description: "Enter Title",
+              controller: titleController,),
 
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //  Text
-                    Text(
-                      "Project Name",
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.subtitleTxt,
-                      ),
-                    ),
-
-                    //  TextField
-                    TextField(
-                      decoration: InputDecoration(
-                        hintText: "Enter title",
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               SizedBox(height: 10),
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: .8),
-
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //  Text
-                    Text(
-                      "Description",
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.subtitleTxt,
-                      ),
-                    ),
-
-                    //  TextField
-                    TextField(
-                      maxLines: 6,
-                      decoration: InputDecoration(
-                        hintText: "Enter Description",
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ],
-                ),
+              CustomTextfield(
+                text: "Description",
+                description: "Enter Description",
+                maxLines: 6,
+                controller: contentControler,
               ),
+
               SizedBox(height: 10),
 
               //starting date......

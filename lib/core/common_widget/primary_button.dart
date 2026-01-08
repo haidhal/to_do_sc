@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:to_do/core/theme/app_colors.dart';
-import 'package:to_do/features/home/presentatiom/pages/home_screen.dart';
+import 'package:to_do/features/auth/presentation/pages/sign_up_screen.dart';
 
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({super.key, required this.showIcon, required this.text});
@@ -36,7 +36,10 @@ class PrimaryButton extends StatelessWidget {
                     onTap: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()),
+                        MaterialPageRoute(
+                          builder: (context) => SignUpScreen(),
+                          //  HomeScreen()
+                        ),
                       );
                     },
                     child: Image.asset(
