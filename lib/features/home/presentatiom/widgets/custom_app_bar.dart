@@ -3,8 +3,8 @@ import 'package:to_do/core/common_widget/common_text_style.dart';
 import 'package:to_do/core/theme/app_colors.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({super.key});
-
+  const CustomAppBar({super.key,required this.name});
+final String name;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -25,7 +25,7 @@ class CustomAppBar extends StatelessWidget {
               fontSize: 14,
             ),
             CommonTextStyle(
-              text: "Livia Vaccaro",
+              text:name,
               fontweight: FontWeight.w600,
               fontSize: 16,
             ),

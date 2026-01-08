@@ -6,6 +6,7 @@ import 'package:to_do/core/theme/app_colors.dart';
 import 'package:to_do/core/utils/data_format.dart';
 import 'package:to_do/core/utils/show_snackbar.dart';
 import 'package:to_do/features/home/presentatiom/bloc/bloc/blog_bloc.dart';
+import 'package:to_do/features/home/presentatiom/bloc/bloc/current_user_bloc.dart';
 import 'package:to_do/features/home/presentatiom/pages/add_task_screen.dart';
 import 'package:to_do/features/home/presentatiom/widgets/custom_app_bar.dart';
 import 'package:to_do/features/home/presentatiom/pages/to_do_detail_screen.dart';
@@ -21,13 +22,23 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+
     context.read<BlogBloc>().add(BlogFetchAllBlogs());
+    context.read<CurrentUserBloc>().add(CurrentUserEvent());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: CustomAppBar()),
+      appBar: AppBar(
+        title: CustomAppBar(
+          name: context.read<CurrentUserBloc>().state is CurrentUserLoaded
+              ? (context.read<CurrentUserBloc>().state as CurrentUserLoaded)
+                    .user
+                    .name
+              : "Guest",
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           //for adding blog

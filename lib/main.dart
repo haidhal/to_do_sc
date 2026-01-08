@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do/core/common/cubits/app_user/app_user_cubit.dart';
+import 'package:to_do/features/auth/domain/use_cases/current_user.dart';
 
 import 'package:to_do/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:to_do/features/home/presentatiom/bloc/bloc/blog_bloc.dart';
+import 'package:to_do/features/home/presentatiom/bloc/bloc/current_user_bloc.dart';
 import 'package:to_do/features/home/presentatiom/pages/home_screen.dart';
 import 'package:to_do/features/splash/presentation/pages/splash_screen.dart';
 import 'package:to_do/init_dependencies.dart';
@@ -18,6 +20,7 @@ void main() async {
         BlocProvider(create: (_) => serviceLocator<AppUserCubit>()),
         BlocProvider(create: (_) => serviceLocator<AuthBloc>()),
          BlocProvider(create: (_) => serviceLocator<BlogBloc>()),
+          BlocProvider(create: (_) => CurrentUserBloc()),
       ],
       child: const MyApp(),
     ),
