@@ -1,20 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:to_do/core/common_widget/common_app_bar.dart';
 import 'package:to_do/core/common_widget/common_text_style.dart';
 import 'package:to_do/core/theme/app_colors.dart';
+import 'package:to_do/features/home/presentatiom/bloc/bloc/read_todo_bloc.dart';
 
-class ToDoDetailScreen extends StatelessWidget {
+class ToDoDetailScreen extends StatefulWidget {
   final String title;
   final String content;
   final String time;
-
+  final int index;
   const ToDoDetailScreen({
     super.key,
     required this.title,
     required this.content,
     required this.time,
+    required this.index,
   });
+
+  @override
+  State<ToDoDetailScreen> createState() => _ToDoDetailScreenState();
+}
+
+class _ToDoDetailScreenState extends State<ToDoDetailScreen> {
+  bool isDone = false;
 
   @override
   Widget build(BuildContext context) {
@@ -42,14 +52,14 @@ class ToDoDetailScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CommonTextStyle(
-                          text: title,
+                          text: widget.title,
                           fontSize: 15,
                           fontweight: FontWeight.w400,
                         ),
                         SizedBox(height: 5),
                         // add subtitle....
                         Text(
-                          content,
+                          widget.content,
                           overflow: TextOverflow.visible,
                           style: GoogleFonts.lexendDeca(
                             fontSize: 12,
@@ -66,9 +76,9 @@ class ToDoDetailScreen extends StatelessWidget {
                               color: AppColors.seconderyClr,
                             ),
                             SizedBox(width: 10),
-                            // time......
+
                             Text(
-                              time,
+                              widget.time,
 
                               style: TextStyle(
                                 color: AppColors.seconderyClr,
@@ -102,23 +112,58 @@ class ToDoDetailScreen extends StatelessWidget {
                         alignment: Alignment.bottomRight,
                         child: Container(
                           padding: EdgeInsets.symmetric(
-                            horizontal: 5,
-                            vertical: 3,
+                            horizontal: 10,
+                            vertical: 5,
                           ),
                           decoration: BoxDecoration(
                             color: Color(0xffEDE8FF),
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: Text(
-                            "Done",
-                            style: GoogleFonts.lexendDeca(
-                              color: AppColors.primaryClr,
-                              fontSize: 10,
-                              fontWeight: FontWeight.w400,
+                          child: GestureDetector(
+                            onTap: () {
+                              context.read<ReadTodoBloc>().add(
+                                ReadTodoEvent(widget.index),
+                              );
+                            },
+                            child: BlocBuilder<ReadTodoBloc, Set<int>>(
+                              builder: (context, state) {
+                                bool isRead = state.contains(widget.index);
+
+                                return isRead
+                                    ? Row(
+                                        children: [
+                                          Text(
+                                            "Done",
+                                            style: GoogleFonts.lexendDeca(
+                                              color: AppColors.primaryClr,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 5),
+                                          Icon(
+                                            Icons.check_circle,
+                                            color: AppColors.primaryClr,
+                                            size: 16,
+                                          ),
+                                        ],
+                                      )
+                                    : Text(
+                                        "Pending",
+                                        style: GoogleFonts.lexendDeca(
+                                          color: AppColors.primaryClr,
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      );
+                              },
                             ),
                           ),
+
+                          
                         ),
                       ),
+                      
                     ],
                   ),
                 ],

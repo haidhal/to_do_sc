@@ -103,6 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => ToDoDetailScreen(
+                                  index: index,
                                   content: blog.content,
                                   time: timeformat,
                                   title: blog.title,
